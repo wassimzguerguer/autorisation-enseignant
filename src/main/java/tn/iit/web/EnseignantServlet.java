@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tn.iit.dao.EnseignantDAO;
 import tn.iit.models.Enseignant;
+import tn.iit.util.PDFpage;
 
 /**
  * Servlet implementation class EnseignantServlet
@@ -57,6 +58,12 @@ public class EnseignantServlet extends HttpServlet {
 			case "/update":
 				updateEnseignant(request, response);
 				break;
+			case "/autorisation":
+				showAuthorizeForm(request, response);
+				break;
+			case "/autoriser":
+				authorizeEnseignant(request, response);
+				break;
 			default:
 				listEnseignant(request, response);
 				break;
@@ -64,6 +71,21 @@ public class EnseignantServlet extends HttpServlet {
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
+	}
+
+	private void authorizeEnseignant(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String description = request.getParameter("description");
+		PDFpage pdfpage = new PDFpage(id, description);
+		System.out.println(pdfpage.getDescription());
+		System.out.println("out");
+		pdfpage.writePDFfile();
+		System.out.println("out0");
+
+		// Enseignant book = new Enseignant(id, name, email, institution);
+		// enseignantDAO.updateUser(book);
+		response.sendRedirect("list");
 	}
 
 	private void listEnseignant(HttpServletRequest request, HttpServletResponse response)
@@ -82,12 +104,23 @@ public class EnseignantServlet extends HttpServlet {
 
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
-	
+
 		int id = Integer.parseInt(request.getParameter("id"));
 		Enseignant existingEnseignant = enseignantDAO.selectUser(id);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("enseignant-form.jsp");
 		request.setAttribute("user", existingEnseignant);
-		
+
+		dispatcher.forward(request, response);
+	}
+
+	private void showAuthorizeForm(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+
+		int id = Integer.parseInt(request.getParameter("id"));
+		Enseignant existingEnseignant = enseignantDAO.selectUser(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("enseignant-autorisation.jsp");
+		request.setAttribute("user", existingEnseignant);
+
 		dispatcher.forward(request, response);
 	}
 

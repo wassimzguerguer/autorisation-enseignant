@@ -15,9 +15,9 @@
 
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
-			style="background-color: tomato">
+			style="background-color: black">
 			<div>
-				<a href="" class="navbar-brand"> Authorization Management App </a>
+				<a href="" class="navbar-brand"> Application de gestion d'autorisations </a>
 			</div>
 
 			<ul class="navbar-nav">
@@ -40,10 +40,10 @@
 				<caption>
 					<h2>
 						<c:if test="${user != null}">
-                                    Edit Enseignant
+                                    Modifier Enseignant
                                 </c:if>
 						<c:if test="${user == null}">
-                                    Add New Enseignant
+                                    Ajouter un nouveau enseignant
                                 </c:if>
 					</h2>
 				</caption>
@@ -53,24 +53,24 @@
 				</c:if>
 
 				<fieldset class="form-group">
-					<label>Enseignant Name</label> <input type="text"
+					<label>Nom d'enseignant</label> <input type="text"
 						value="<c:out value='${user.name}' />" class="form-control"
 						name="name" required="required">
 				</fieldset>
 
 				<fieldset class="form-group">
-					<label>Enseignant Email</label> <input type="text"
+					<label>E-mail de l'enseignant</label> <input type="text"
 						value="<c:out value='${user.email}' />" class="form-control"
 						name="email">
 				</fieldset>
 
 				<fieldset class="form-group">
-					<label>Enseignant institution</label> <input type="text"
+					<label>Institution de l'enseignant</label> <input type="text"
 						value="<c:out value='${user.institution}' />" class="form-control"
 						name="institution">
 				</fieldset>
 
-				<button type="submit" class="btn btn-success">Save</button>
+				<button type="submit" class="btn btn-success">Enregistrer</button>
 				</form>
 			</div>
 		</div>
